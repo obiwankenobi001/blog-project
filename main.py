@@ -10,6 +10,7 @@ from flask_login import UserMixin, login_user, LoginManager, current_user, logou
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from functools import wraps
 from flask import abort
+
 import os
 
 
