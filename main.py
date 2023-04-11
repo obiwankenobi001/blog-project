@@ -16,7 +16,7 @@ import os
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -48,8 +48,8 @@ class User(UserMixin, db.Model):
     #add parent relationship fpr the comments so we can know who posted a comment
     comments = relationship("Comment", back_populates="comment_author")
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 ##CONFIGURE TABLES
 
 class BlogPost(db.Model):
@@ -68,8 +68,8 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     comments = relationship("Comment", back_populates="parent_post")
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 class Comment(db.Model):
