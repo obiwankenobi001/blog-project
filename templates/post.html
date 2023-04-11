@@ -46,10 +46,9 @@
 
           <div class="col-lg-8 col-md-10 mx-auto comment">
               <ul class="commentList">
-                {% for comment in post.comments: %}
                 <li>
                     <div class="commenterImage">
-                      <img src="{{ comment.comment_author.email | gravatar }}"/>
+                      <img src="https://pbs.twimg.com/profile_images/744849215675838464/IH0FNIXk.jpg"/>
                     </div>
                     <div class="commentText">
                       {{comment.text|safe}}
