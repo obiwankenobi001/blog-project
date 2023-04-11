@@ -17,7 +17,7 @@ import os
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -49,8 +49,8 @@ class User(UserMixin, db.Model):
     #add parent relationship fpr the comments so we can know who posted a comment
     comments = relationship("Comment", back_populates="comment_author")
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 ##CONFIGURE TABLES
 
 class BlogPost(db.Model):
@@ -69,8 +69,8 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     comments = relationship("Comment", back_populates="parent_post")
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 class Comment(db.Model):
@@ -84,8 +84,8 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     comment_author = relationship("User", back_populates="comments")
     parent_post = relationship("BlogPost", back_populates="comments")
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 
@@ -162,8 +162,8 @@ def logout():
 
 @app.route("/post/<int:post_id>", methods=["POST", "GET"])
 def show_post(post_id):
-    requested_post = BlogPost.query.get(post_id)
     form = CommentForm()
+    requested_post = BlogPost.query.get(post_id)
 
     if form.validate_on_submit():
         if not current_user.is_authenticated:
@@ -177,7 +177,7 @@ def show_post(post_id):
         )
         db.session.add(new_comment)
         db.session.commit()
-        return redirect(url_for('show_post', post_id=post_id))
+
 
     return render_template("post.html", post=requested_post, form=form, logged_in=True)
 
